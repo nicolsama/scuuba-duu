@@ -10,7 +10,7 @@
   - Users can receive points during their dives. 
   - Users can log their score. 
 ## Wireframe
- ![scuuba-duu-wireframe](https://wireframe.cc/pro/pp/93b8e94d7337609)
+ ![scuuba-duu-wireframe]()
 ## Architecture and Technology
   - Javascript for game logic
   - 
