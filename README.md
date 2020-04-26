@@ -10,10 +10,10 @@
   - Users can receive points during their dives. 
   - Users can log their score. 
 ## Wireframe
- ![scuuba-duu-wireframe]()
+ ![scuuba-duu-wireframe](src/assets/scuubaduu-wireframe.png)
 ## Architecture and Technology
   - Javascript for game logic
-  - 
+  - HTML5 Canvas for rendering game
   - Webpack for bundling files
 ## Implementation Timeline
 
