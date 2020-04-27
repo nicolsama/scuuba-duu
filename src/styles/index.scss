@@ -1,0 +1,34 @@
+* {
+    padding: 0 ; 
+    margin: 0 ;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+canvas {
+    display: block;
+    background-color: lightseagreen;
+    height: 480px;
+    width: 600px;
+    margin: 50px auto;
+}
+
+.bottom-container {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bottom-container section {
+    height: 100px;
+    background-color: lightgray;
+    width: 50%;
+    margin: 50px;
+    box-sizing: border-box;
+}
