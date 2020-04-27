@@ -19,7 +19,7 @@
 ## Implementation Timeline
   - Set up basic skeleton (4.26.20, Sunday)
   - Draw basic canvas shapes for each component, work on rendering intervals for randomized bubbles / sand dollars / sharks (4.27.20, Monday)
-  - Begin core game logic ( Starting game, oxygen meter levels, point accruing & game over.  (4.28.20, Tuesday)
+  - Begin core game logic -- Starting game, oxygen meter levels, point accruing & game over.  (4.28.20, Tuesday)
   - Continue game logic and rendering details. (4.29.20, Wednesday)
   - Set up database for persisting highscores. Add portfolio links, & how to play/commands. (4.30.20, Thursday)
   - Production README, addtl styling (5.1.20, Friday)
