@@ -16,19 +16,26 @@ export default class Game {
         this.x = this.canvas.width / 2;
         this.y = this.canvas.height / 2;
         this.diver = new Diver(this.canvas.width / 2, this.canvas.height / 2);
-        // this.sanddollar = new SandDollar(); // logic for points (pass in score to render ) // logic to randomize
         this.oxygenMeter = new Oxygen();
         this.oxygenLevel = 100;
-        // this.fish = new Fish();
-        // this.coral = new Coral(); 
         this.score = 0;
         this.scoreBoard = new ScoreBoard();
-        this.fps = 8;
+        this.fps = 7;
         this.meterColor = "limegreen";
+        this.itemCount = 0;
+
+        // keys 
+        this.rightPressed = false;
+        this.leftPressed = false; 
+        this.upPressed = false; 
+        this.downPressed = false; 
         
+        // currently rendered objs
         this.bubbles = {};
         this.sharks = {};
+        this.items = {};
         
+        // gameState
         this.running = false;
         this.isGameOver = false; 
         
@@ -36,25 +43,31 @@ export default class Game {
         this.bubbleInterval = null; 
         this.oxygenInterval = null; 
         this.sharkInterval = null; 
-
+        this.itemInterval = null; 
+        
         //initialize & bind
-        this.gameOver = this.gameOver.bind(this);
+        this.render = this.render.bind(this);
+        this.draw = this.draw.bind(this); 
         this.generateSharks = this.generateSharks.bind(this);
+        this.generateBubbles = this.generateBubbles.bind(this);
+        this.generateItems = this.generateItems.bind(this);
         this.deleteOldBubbles = this.deleteOldBubbles.bind(this);
         this.deleteOldSharks = this.deleteOldSharks.bind(this);
-        this.getPoints = this.getPoints.bind(this);
+        this.getDivePoints = this.getDivePoints.bind(this);
+        this.collectItems = this.collectItems.bind(this);
         this.addOxygen = this.addOxygen.bind(this);
         this.loseOxygen = this.loseOxygen.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
-        this.generateBubbles = this.generateBubbles.bind(this);
-        this.render = this.render.bind(this);
+        this.handleKeyUp = this.handleKeyUp.bind(this); 
+        this.gameOver = this.gameOver.bind(this);
 
         this.initializeEvents();
         this.restart();
     }
 
     initializeEvents() {
-        document.addEventListener('keydown', this.handleKeyDown)
+        document.addEventListener('keydown', this.handleKeyDown);
+        document.addEventListener('keyup', this.handleKeyUp);
     }
 
     restart() {
@@ -74,6 +87,7 @@ export default class Game {
         this.bubbleInterval = setInterval(this.generateBubbles, 2000);
         this.oxygenInterval = setInterval(this.loseOxygen, 2000);
         this.sharkInterval = setInterval(this.generateSharks, 10000);
+        this.itemInterval = setInterval(this.generateItems, 1000)
     }
 
     addOxygen() {
@@ -95,8 +109,95 @@ export default class Game {
         if (this.oxygenLevel < 33) this.meterColor = "red";
     }
 
-    getPoints() {
+    getDivePoints() {
         this.score += 1; 
+    }
+
+    collectItems() {
+        console.log("Item Collected!")
+        this.score += 5
+    }
+
+    draw() {
+
+        let newBubbles = this.bubbles;
+        let newSharks = this.sharks;
+        let newItems = this.items;
+
+        if (this.upPressed) {
+            for (let bx in this.bubbles) {
+                this.bubbles[bx].y += this.fps;
+            }
+            for (let ix in this.items) {
+                this.items[ix].y += this.fps;
+            }
+            for (let sy in this.sharks) {
+                let newY = parseInt(sy) + this.fps;
+                newSharks[newY] = newSharks[sy];
+                delete newSharks[sy];
+            }
+            this.sharks = newSharks;
+        }
+
+        if (this.downPressed) {
+            this.getDivePoints();
+            for (let bx in this.bubbles) {
+                this.bubbles[bx].y -= this.fps;
+            }
+            for (let ix in this.items) {
+                this.items[ix].y -= this.fps;
+            }
+            for (let sy in this.sharks) {
+                let newY = parseInt(sy) - this.fps;
+                newSharks[newY] = newSharks[sy];
+                delete newSharks[sy];
+            }
+            this.sharks = newSharks;
+        }
+
+        if (this.rightPressed) {
+             for (let sy in this.sharks) {
+                 this.sharks[sy].x -= this.fps;
+             }
+             for (let bx in this.bubbles) {
+                 let newX = parseInt(bx) - this.fps;
+                 newBubbles[newX] = newBubbles[bx];
+                 delete newBubbles[bx];
+             }
+             for (let ix in this.items) {
+                 let newX = parseInt(ix) - this.fps;
+                 newItems[newX] = newItems[ix];
+                 delete newItems[ix];
+             }
+             this.items = newItems;
+             this.bubbles = newBubbles;
+        }
+
+        if (this.leftPressed) {
+             for (let sy in this.sharks) {
+                 this.sharks[sy].x += this.fps;
+             }
+             for (let bx in newBubbles) {
+                 let newX = parseInt(bx) + this.fps;
+                 newBubbles[newX] = newBubbles[bx];
+                 delete newBubbles[bx];
+             }
+             for (let ix in this.items) {
+                 let newX = parseInt(ix) + this.fps;
+                 newItems[newX] = newItems[ix];
+                 delete newItems[ix];
+             }
+             this.items = newItems;
+             this.bubbles = newBubbles;
+        }
+
+    }
+
+    handleKeyUp() {
+        this.upPressed = false; 
+        this.downPressed = false; 
+        this.rightPressed = false; 
+        this.leftPressed = false; 
     }
 
     handleKeyDown(event) {
@@ -104,62 +205,23 @@ export default class Game {
             this.play();
         } else {
             event.preventDefault();
-            let newBubbles = this.bubbles; 
-            let newSharks = this.sharks; 
             switch (event.keyCode) {
                 case 38:
                     console.log("Up key is pressed");
-                    // this.y += this.fps;
-                    for (let bx in this.bubbles) {
-                        this.bubbles[bx].y += this.fps;
-                    }
-                    for (let sy in this.sharks) {
-                        let newY = parseInt(sy) + this.fps; 
-                        newSharks[newY] = newSharks[sy]; 
-                        delete newSharks[sy];
-                    }
-                    this.sharks = newSharks;
+                    this.upPressed = true; 
                     break;
                 case 40:
                     console.log("Down key is pressed");
-                    // this.y -= this.fps;
-                    this.getPoints();
-                    for (let bx in this.bubbles) {
-                        this.bubbles[bx].y -= this.fps;
-                    }
-                    for (let sy in this.sharks) {
-                        let newY = parseInt(sy) - this.fps;
-                        newSharks[newY] = newSharks[sy];
-                        delete newSharks[sy];
-                    }
-                    this.sharks = newSharks;
+                        this.downPressed = true; 
                     break;
                 case 39:
                     console.log("Right key is pressed");
-                    // this.x -= this.fps;
-                    for (let sy in this.sharks) {
-                        this.sharks[sy].x -= this.fps;
-                    }
-                    for (let bx in this.bubbles) {
-                        let newX = parseInt(bx) - this.fps;
-                        newBubbles[newX] = newBubbles[bx];
-                        delete newBubbles[bx];
-                    }
-                    this.bubbles = newBubbles;
+                        this.rightPressed = true; 
                     break;
                 case 37:
                     console.log("Left key is pressed");
                     event.preventDefault();
-                    // this.x += this.fps;
-                    for (let sy in this.sharks) {
-                        this.sharks[sy].x += this.fps;
-                    }
-                    for (let bx in newBubbles) {
-                        let newX = parseInt(bx) + this.fps;
-                        newBubbles[newX] = newBubbles[bx];
-                        delete newBubbles[bx];
-                    }
-                    this.bubbles = newBubbles;
+                    this.leftPressed = true; 
                     break;
             }
         }
@@ -167,14 +229,12 @@ export default class Game {
 
     render() {
 
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); 
         this.diver.render(this.ctx);
         this.oxygenMeter.render(this.ctx, this.oxygenLevel, this.meterColor);
         this.scoreBoard.render(this.ctx, this.score);
-        // this.sanddollar.render(this.ctx, this.x + 40, this.y + 40);
-        // this.fish.render(this.ctx, this.x + 250, this.y + 200);
-        // this.coral.render(this.ctx, this.x - 250, this.y + 200, "orange");
-        // this.coral.render(this.ctx, this.x - 200, this.y + 150, "hotpink");
+        this.draw();
+
 
         if (this.running && Object.values(this.bubbles).length > 0) {
             for (let bx in this.bubbles) {
@@ -187,8 +247,13 @@ export default class Game {
             }
         }
 
+        if (this.running && Object.values(this.items).length > 0) {
+            for (let ix in this.items) {
+                this.items[ix].render(ix);
+            }
+        }
+
         if (this.oxygenLevel <= 0 && this.running) {
-            clearInterval(bubbleInterval);
             this.gameOver();
         }
 
@@ -203,6 +268,8 @@ export default class Game {
         clearInterval(this.bubbleInterval); 
         clearInterval(this.sharkInterval); 
         clearInterval(this.oxygenInterval);
+        clearInterval(this.itemInterval);
+
         // console.log("GAME OVER");
         // render game over screen
         alert("GameOVER"); // remove eventually 
@@ -236,6 +303,25 @@ export default class Game {
         for (let sy in this.sharks) {
             (this.sharks[sy].x < -100) ? delete this.sharks[sy]: null;
         }
+    }
+
+    generateItems() {
+        const coralColors = ["hotpink", "teal", "orange", "red", "pink"];
+
+        let item; 
+        let itemX = Math.floor(Math.random() * this.canvas.width); 
+
+        if (this.itemCount % 2 === 0) {
+            item = new SandDollar(this.ctx, this.canvas.height, this.canvas.width, this.collectItems);
+    
+        } else {
+            let color = coralColors[Math.floor(Math.random() * 4)];
+            item = new Coral(this.ctx, color, this.canvas.height, this.canvas.width, this.collectItems);
+        }
+
+        this.items[itemX] = item; 
+        this.itemCount += 1;
+
     }
 
 }

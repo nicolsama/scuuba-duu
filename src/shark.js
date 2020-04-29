@@ -8,7 +8,7 @@ export default class Shark {
         this.x = this.canvasWidth + 100;
         this.ctx = ctx; 
 
-        this.range = 20;
+        this.range = 40;
         this.gameOver = gameOver;
     }
 
