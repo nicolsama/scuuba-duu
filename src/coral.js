@@ -8,7 +8,7 @@ export default class Coral {
         this.collectItems = collectItems;
         this.collected = false;
         this.range = 20;
-        debugger; 
+
     }
 
     render(x) {
@@ -22,15 +22,15 @@ export default class Coral {
             null
         }
 
-        debugger;
+
         let minX = ((this.canvasWidth / 2) - this.range);
         let maxX = ((this.canvasWidth / 2) + this.range);
         let minY = ((this.canvasHeight / 2) - this.range);
         let maxY = ((this.canvasHeight / 2) + this.range);
         let y = this.y;
-        debugger;
+
         if (x > minX && x < maxX && y > minY && y < maxY && !this.collected) {
-            debugger; 
+     
             this.collectItems();
             this.collected = true;
         }

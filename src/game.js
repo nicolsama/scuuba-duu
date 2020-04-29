@@ -6,8 +6,7 @@ import ScoreBoard from './score.js';
 import Oxygen from './oxygen.js';
 import Fish from './fish.js';
 import Coral from './coral.js';
-
-
+import GameOverScreen from './game_over.js';
 
 export default class Game {
     constructor() {  
@@ -15,15 +14,18 @@ export default class Game {
         this.ctx = canvas.getContext("2d");
         this.x = this.canvas.width / 2;
         this.y = this.canvas.height / 2;
-        this.diver = new Diver(this.canvas.width / 2, this.canvas.height / 2);
-        this.oxygenMeter = new Oxygen();
-        this.oxygenLevel = 100;
-        this.score = 0;
-        this.scoreBoard = new ScoreBoard();
-        this.fps = 7;
-        this.meterColor = "limegreen";
-        this.itemCount = 0;
 
+        this.oxygenMeter = new Oxygen();
+        this.diver = new Diver(this.canvas.width / 2, this.canvas.height / 2);
+        this.scoreBoard = new ScoreBoard();
+        this.gameOverScreen = new GameOverScreen(this.ctx, this.x, this.y);
+
+        this.meterColor = "lightblue";
+        this.score = 0;
+        this.itemCount = 0;
+        this.oxygenLevel = 100;
+        this.fps = 7;
+        
         // keys 
         this.rightPressed = false;
         this.leftPressed = false; 
@@ -75,9 +77,10 @@ export default class Game {
         this.isGameOver = false;
         this.score = 0;
         this.oxygenLevel = 100;
-        this.meterStatus();
         this.bubbles = {};
+        this.items = {};
         this.sharks = {};
+        this.meterStatus();
         this.render();
     }
     
@@ -99,12 +102,12 @@ export default class Game {
     }
 
     loseOxygen() {
-        this.oxygenLevel -= 5; 
+        this.oxygenLevel -= 25; // change back to -5 after testing 
         this.meterStatus();
     }
 
     meterStatus() {
-        if (this.oxygenLevel >= 66) this.meterColor = "limegreen";
+        if (this.oxygenLevel >= 66) this.meterColor = "lightblue";
         if (this.oxygenLevel < 66) this.meterColor = "orange";
         if (this.oxygenLevel < 33) this.meterColor = "red";
     }
@@ -201,6 +204,13 @@ export default class Game {
     }
 
     handleKeyDown(event) {
+        event.preventDefault();
+
+        if (this.isGameOver) {
+            this.restart();
+            return 
+        }
+
         if (!this.running) {
             this.play();
         } else {
@@ -269,11 +279,9 @@ export default class Game {
         clearInterval(this.sharkInterval); 
         clearInterval(this.oxygenInterval);
         clearInterval(this.itemInterval);
-
-        // console.log("GAME OVER");
-        // render game over screen
-        alert("GameOVER"); // remove eventually 
-        this.restart(); // setTimeout?
+        this.gameOverScreen.render(this.score);
+        // this.renderGameOverScreen();
+        // setTimeout(this.restart.bind(this), 10000)
     }
 
     generateBubbles() {
@@ -293,7 +301,7 @@ export default class Game {
     generateSharks() {
         let sharkY = Math.floor(Math.random() * this.canvas.height);
         let shark = new Shark(this.ctx, this.canvas.height, this.canvas.width, this.gameOver);
-        debugger;
+
         this.sharks[sharkY] = shark;
         this.deleteOldSharks();
     }

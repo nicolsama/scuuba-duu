@@ -36,7 +36,7 @@ export default class Bubble {
         let y = this.y;
 
         if ( x > minX && x < maxX && y > minY && y < maxY && !this.popped) {
-            debugger; 
+
             this.addO2(); // pass in the bubble to be deleted
             this.popped = true; 
         }

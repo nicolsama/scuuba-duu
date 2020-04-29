@@ -22,7 +22,7 @@ export default class SandDollar {
         } else {
             null
         }
-        debugger; 
+
             let minX = ((this.canvasWidth / 2) - this.range);
             let maxX = ((this.canvasWidth / 2) + this.range);
             let minY = ((this.canvasHeight / 2) - this.range);
@@ -30,7 +30,7 @@ export default class SandDollar {
             let y = this.y;
 
             if (x > minX && x < maxX && y > minY && y < maxY && !this.collected) {
-                debugger;
+
                 this.collectItems();
                 this.collected = true;
         }
