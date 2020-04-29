@@ -30,8 +30,43 @@ nav {
 
 canvas {
     display: block;
-    background-color: lightseagreen;
+  
     margin: 50px auto;
+
+    background: linear-gradient(0deg, #00aa7e, #00aa7e, #0080c8, #003b9d, #0080c8, #00aa7e, #00aa7e, );
+    background-size: 700% 700%;
+
+    -webkit-animation: AnimationName 30s  linear infinite;
+    -moz-animation: AnimationName 30s linear  infinite;
+    animation: AnimationName 30s  linear infinite;
+
+    @-webkit-keyframes AnimationName {
+        0% {
+            background-position: 50% 0%
+        }
+        100% {
+            background-position: 50% 100%
+        }    
+    }
+
+    @-moz-keyframes AnimationName {
+        0% {
+            background-position: 50% 0%
+        }
+
+        100% {
+            background-position: 50% 100%
+        }
+    }
+
+    @keyframes AnimationName {
+        0% {
+            background-position: 50% 0%
+        }
+        100% {
+            background-position: 51% 100%
+        }
+    }
 }
 
 .bottom-container {
