@@ -18,6 +18,19 @@ const config = {
   var database = firebase.database();
 
 
+// read score data once 
+
+let highScores; 
+
+  const fetchHighScores = () => {
+      database.ref('/scores/').once('value').then(snap => {
+          highScores = snap.val();
+        //   debugger; 
+          displayHighScores(highScores);
+      });
+  };
+
+  fetchHighScores();
 
 
 // write user score data to the db
@@ -29,6 +42,22 @@ const config = {
           value: value,
       });
   }
+
+  // show high Scores
+
+  function displayHighScores(highScores) {
+        let highScoreList = document.getElementById("high-scores"); 
+        // debugger; 
+        let scores = Object.values(highScores).sort( (a,b) => (a.value - b.value));
+        // debugger; 
+        scores.forEach( score => {
+            let li = document.createElement("li"); 
+            let text = document.createTextNode(`${score.name} : ${score.value}`);
+            li.appendChild(text);
+            highScoreList.appendChild(li)
+        })
+  }
+
 
 //   writeUserData("nikki", 2000);
 
