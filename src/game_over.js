@@ -13,9 +13,6 @@ export default class GameOver {
         this.ctx.fillStyle = "yellow";
         this.ctx.font = '20px Roboto Mono';
         this.ctx.fillText('Press any key to try again!', this.x - 150, this.y + 140);
-
-
-
     }
 
 }

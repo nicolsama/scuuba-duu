@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../dist/main.css">
+    <link rel="stylesheet" href="./dist/main.css">
     <title>Scuuba Duu</title>
 </head>
 <body>
@@ -16,13 +16,16 @@
     </nav>
     <div id="wrapper">
         <canvas id="canvas" width="900" height="600"></canvas>
-        <script type="text/javascript" src="../dist/bundle.js"></script>
-        <div id="input-username">
-            <h2>Enter Username</h2>
-            <div id="form">
+        <script type="text/javascript" src="./dist/bundle.js"></script>
+        <div id="input-username" class="hidden">
+            <h1>DED DUUDE</h1>
+            <h2>Enter A Username</h2>
+            <form id="submit-form">
+
                 <input type="text" id="name" size=15>
-                <button id="submitName">OK</button>
-            </div>
+                <input type="submit" id="submit-button" value="OK" />
+
+            </form>
         </div>
     </div>
     <div class="bottom-container">
@@ -32,6 +35,12 @@
         </section>
         <section>
             <h3>How To Play</h3>
+            <ul>
+                <li>Keep diving lower to get points</li>
+                <li>Keep you air levels up by hitting bubbles</li>
+                <li>Collect coral and sand dollars for additional points</li>
+                <li>Avoid shark attacks</li>
+            </ul>
         </section>
     </div>
 

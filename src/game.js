@@ -6,7 +6,7 @@ import ScoreBoard from './score.js';
 import Oxygen from './oxygen.js';
 import Fish from './fish.js';
 import Coral from './coral.js';
-import GameOverScreen from './game_over.js';
+// import GameOverScreen from './game_over.js';
 
 export default class Game {
     constructor() {  
@@ -18,7 +18,7 @@ export default class Game {
         this.oxygenMeter = new Oxygen();
         this.diver = new Diver(this.canvas.width / 2, this.canvas.height / 2);
         this.scoreBoard = new ScoreBoard();
-        this.gameOverScreen = new GameOverScreen(this.ctx, this.x, this.y);
+        // this.gameOverScreen = new GameOverScreen(this.ctx, this.x, this.y);
 
         this.meterColor = "lightblue";
         this.score = 0;
@@ -40,6 +40,7 @@ export default class Game {
         // gameState
         this.running = false;
         this.isGameOver = false; 
+        this.usernameSubmitted = false; 
         
         // setInterval Ids
         this.bubbleInterval = null; 
@@ -73,6 +74,7 @@ export default class Game {
     }
 
     restart() {
+        this.usernameSubmitted = false; 
         this.running = false; 
         this.isGameOver = false;
         this.score = 0;
@@ -204,16 +206,17 @@ export default class Game {
     }
 
     handleKeyDown(event) {
-        event.preventDefault();
+        // event.preventDefault();
 
-        if (this.isGameOver) {
+        if (this.isGameOver && this.usernameSubmitted) {
             this.restart();
             return 
         }
 
-        if (!this.running) {
+        if (!this.running && (!this.isGameOver)) {
+            // debugger; 
             this.play();
-        } else {
+        } else if (this.running) {
             event.preventDefault();
             switch (event.keyCode) {
                 case 38:
@@ -270,16 +273,19 @@ export default class Game {
         if (this.running && (!this.isGameOver)) {         
             requestAnimationFrame(this.render.bind(this));
         }
+
     }
 
     gameOver() {
         this.running = false; 
         this.isGameOver = true;
-        clearInterval(this.bubbleInterval); 
-        clearInterval(this.sharkInterval); 
+        let inputName = document.getElementById("input-username");
+        inputName.classList.remove("hidden");
+        clearInterval(this.bubbleInterval);
+        clearInterval(this.sharkInterval);
         clearInterval(this.oxygenInterval);
         clearInterval(this.itemInterval);
-        this.gameOverScreen.render(this.score);
+        // this.gameOverScreen.render(this.score); // change to start screen
         // this.renderGameOverScreen();
         // setTimeout(this.restart.bind(this), 10000)
     }
