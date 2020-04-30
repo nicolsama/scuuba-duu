@@ -104,7 +104,7 @@ export default class Game {
     }
 
     loseOxygen() {
-        this.oxygenLevel -= 25; // change back to -5 after testing 
+        this.oxygenLevel -= 5; // change back to -5 after testing 
         this.meterStatus();
     }
 
