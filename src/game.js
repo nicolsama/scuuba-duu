@@ -6,7 +6,10 @@ import ScoreBoard from './score.js';
 import Oxygen from './oxygen.js';
 import Fish from './fish.js';
 import Coral from './coral.js';
-// import GameOverScreen from './game_over.js';
+import StartScreen from './start_screen.js';
+import StingRay from './stingray.js';
+import JellyFish from './jellyfish'; 
+
 
 export default class Game {
     constructor() {  
@@ -18,7 +21,10 @@ export default class Game {
         this.oxygenMeter = new Oxygen();
         this.diver = new Diver(this.canvas.width / 2, this.canvas.height / 2);
         this.scoreBoard = new ScoreBoard();
-        // this.gameOverScreen = new GameOverScreen(this.ctx, this.x, this.y);
+        this.startScreen = new StartScreen(this.ctx, this.x, this.y);
+
+
+        this.StingRay = new StingRay(this.ctx, this.x, this.y); // test rendering 
 
         this.meterColor = "lightblue";
         this.score = 0;
@@ -35,6 +41,9 @@ export default class Game {
         // currently rendered objs
         this.bubbles = {};
         this.sharks = {};
+        this.yellowfish = {}; // eventually add fish to swim
+        this.bluefish = {}; // eventually add fish to swim
+
         this.items = {};
         
         // gameState
@@ -84,6 +93,7 @@ export default class Game {
         this.sharks = {};
         this.meterStatus();
         this.render();
+        this.startScreen.render();
     }
     
     play() {
@@ -104,7 +114,12 @@ export default class Game {
     }
 
     loseOxygen() {
-        this.oxygenLevel -= 5; // change back to -5 after testing 
+        if ((this.oxygenLevel - 10) < 0 ) {
+            this.oxygenLevel = 0
+        } else {
+            this.oxygenLevel -= 10;
+        }
+
         this.meterStatus();
     }
 
@@ -206,7 +221,7 @@ export default class Game {
     }
 
     handleKeyDown(event) {
-        // event.preventDefault();
+        if (this.usernameSubmitted) event.preventDefault();
 
         if (this.isGameOver && this.usernameSubmitted) {
             this.restart();
@@ -246,6 +261,7 @@ export default class Game {
         this.diver.render(this.ctx);
         this.oxygenMeter.render(this.ctx, this.oxygenLevel, this.meterColor);
         this.scoreBoard.render(this.ctx, this.score);
+        // this.StingRay.render(this.y + 200)
         this.draw();
 
 
@@ -285,9 +301,6 @@ export default class Game {
         clearInterval(this.sharkInterval);
         clearInterval(this.oxygenInterval);
         clearInterval(this.itemInterval);
-        // this.gameOverScreen.render(this.score); // change to start screen
-        // this.renderGameOverScreen();
-        // setTimeout(this.restart.bind(this), 10000)
     }
 
     generateBubbles() {
