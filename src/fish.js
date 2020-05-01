@@ -1,31 +1,39 @@
 export default class Fish {
-    constructor() {
-
+    // this.ctx, color, this.canvas.height, this.canvas.width, this.collectItems);
+    constructor(ctx, color, canvasHeight, canvasWidth, collectItems) {
+        this.ctx = ctx; 
+        this.x = canvasWidth + 30; 
+        this.color = color; 
+        this.collectItems = collectItems; 
     }
     
-    render(ctx, x, y) {
-        ctx.fillStyle = "yellow"; // body
-        ctx.fillRect(x, y, 20, 20);
+    render(y) {
+        y = parseInt(y);
 
-        ctx.beginPath(); // head
-        ctx.moveTo(x -10, y + 5);
-        ctx.lineTo(x, y + 20);
-        ctx.lineTo(x, y);
-        ctx.closePath();
-        ctx.fill();
+        this.ctx.fillStyle = this.color; // body
+        this.ctx.fillRect(this.x, y, 20, 20);
 
-        ctx.beginPath(); // tail
-        ctx.moveTo(x + 18, y + 5);
-        ctx.lineTo(x + 30, y + 20);
-        ctx.lineTo(x + 30, y);
-        ctx.closePath();
-        ctx.fill();
+        this.ctx.beginPath(); // head
+        this.ctx.moveTo(this.x -10, y + 5);
+        this.ctx.lineTo(this.x, y + 20);
+        this.ctx.lineTo(this.x, y);
+        this.ctx.closePath();
+        this.ctx.fill();
 
-        ctx.fillStyle = "blue"; // eye
-        ctx.fillRect(
-            x-2, y + 5,
+        this.ctx.beginPath(); // tail
+        this.ctx.moveTo(this.x + 18, y + 5);
+        this.ctx.lineTo(this.x + 30, y + 20);
+        this.ctx.lineTo(this.x + 30, y);
+        this.ctx.closePath();
+        this.ctx.fill();
+
+        this.ctx.fillStyle = "black"; // eye
+        this.ctx.fillRect(
+            this.x-2, y + 5,
             3, 3,
         );
+
+        this.x -= 2;
 
     }
 }

@@ -31,7 +31,7 @@ export default class SandDollar {
 
             if (x > minX && x < maxX && y > minY && y < maxY && !this.collected) {
 
-                this.collectItems();
+                this.collectItems(this);
                 this.collected = true;
         }
     }

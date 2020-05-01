@@ -61,7 +61,6 @@ window.onload = function () {
 // write user score data to the db
 
   function writeUserData(name, value) {
-    //   debugger; 
       firebase.database().ref('scores/' + name).set({
           name: name,
           value: value,
@@ -73,8 +72,7 @@ window.onload = function () {
   function displayHighScores(highScores) {
         let highScoreList = document.getElementById("high-scores"); 
         highScoreList.innerHTML = '';
-        let scores = Object.values(highScores)
-
+        let scores = ((highScores) ? Object.values(highScores): [])
             .sort( (b, a) => (a.value - b.value))
             .slice(0,6);
         scores.forEach( score => {

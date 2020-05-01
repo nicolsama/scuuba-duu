@@ -8,7 +8,7 @@ export default class Bubble {
         this.canvasHeight = canvasHeight;
         this.ctx = ctx;
         // this.x = (Math.random() * this.canvasWidth); 
-        this.y = this.canvasHeight + 30; 
+        this.y = this.canvasHeight - 60; 
         this.addO2 = addO2; 
         this.range = 20;
         this.popped = false; 

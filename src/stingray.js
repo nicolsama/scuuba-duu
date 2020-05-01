@@ -1,14 +1,18 @@
 export default class StingRay {
-    constructor(ctx, x) {
+    constructor(ctx, canvasHeight, canvasWidth, loseOxygen, x) {
         this.ctx = ctx; 
         this.x = x; 
         this.height = 50; 
         this.width = 50;
-        // this.y = y;
+        this.loseOxygen = loseOxygen; 
+        this.canvasHeight = canvasHeight; 
+        this.canvasWidth = canvasWidth; 
+        this.range = 80; 
     }
 
     render(y) {
-         this.ctx.fillStyle = "#86b8af"; 
+        y = parseInt(y);
+         this.ctx.fillStyle = "#d0c3d9";
 
         this.ctx.beginPath(); // body
         this.ctx.moveTo(this.x, y)
@@ -40,6 +44,19 @@ export default class StingRay {
             this.x + 60, y -10,
             3, 3,
         );
+
+        this.x += 2; 
+
+        let minX = ((this.canvasWidth / 2) - this.range);
+        let maxX = ((this.canvasWidth / 2) + this.range);
+        let minY = ((this.canvasHeight / 2) - this.range);
+        let maxY = ((this.canvasHeight / 2) + this.range);
+        let x = this.x;
+
+        if (x > minX && x < maxX && y > minY && y < maxY) {
+            this.loseOxygen(this);
+            console.log("Sting Ray Attack!")
+        }
 
     }
 }

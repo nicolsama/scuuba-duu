@@ -4,9 +4,22 @@ export default class Diver {
         this.y = y;
         this.width = 20;
         this.height = 20;
+        this.paralyzed = false; 
+
+        this.unParalyze = this.unParalyze.bind(this);
+    }
+
+    toggleParalyze() {
+        this.paralyzed = !this.paralyzed; 
+    }
+
+    unParalyze() {
+        this.paralyzed = false;
     }
 
     render(ctx) {
+
+        let color = (this.paralyzed) ? "#6e78ff" : "black";
 
         ctx.fillStyle = "white"
         ctx.fillRect( // tank
@@ -25,7 +38,7 @@ export default class Diver {
         );
 
 
-        ctx.fillStyle = "black";
+        ctx.fillStyle = color;
         ctx.fillRect( // head
             this.x-4, this.y-25,
             this.width/2, this.height-2,

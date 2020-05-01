@@ -23,12 +23,10 @@ export default class Game {
         this.scoreBoard = new ScoreBoard();
         this.startScreen = new StartScreen(this.ctx, this.x, this.y);
 
-
-        this.StingRay = new StingRay(this.ctx, this.x, this.y); // test rendering 
-
         this.meterColor = "lightblue";
         this.score = 0;
         this.itemCount = 0;
+        this.fishCount = 0; 
         this.oxygenLevel = 100;
         this.fps = 7;
         
@@ -41,9 +39,6 @@ export default class Game {
         // currently rendered objs
         this.bubbles = {};
         this.sharks = {};
-        this.yellowfish = {}; // eventually add fish to swim
-        this.bluefish = {}; // eventually add fish to swim
-
         this.items = {};
         
         // gameState
@@ -60,15 +55,16 @@ export default class Game {
         //initialize & bind
         this.render = this.render.bind(this);
         this.draw = this.draw.bind(this); 
-        this.generateSharks = this.generateSharks.bind(this);
+        this.generateSharksAndFish = this.generateSharksAndFish.bind(this);
         this.generateBubbles = this.generateBubbles.bind(this);
         this.generateItems = this.generateItems.bind(this);
         this.deleteOldBubbles = this.deleteOldBubbles.bind(this);
-        this.deleteOldSharks = this.deleteOldSharks.bind(this);
+        this.deleteOldSharksAndFish = this.deleteOldSharksAndFish.bind(this);
         this.getDivePoints = this.getDivePoints.bind(this);
         this.collectItems = this.collectItems.bind(this);
         this.addOxygen = this.addOxygen.bind(this);
         this.loseOxygen = this.loseOxygen.bind(this);
+        this.jellyAttack = this.jellyAttack.bind(this);
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this); 
         this.gameOver = this.gameOver.bind(this);
@@ -101,7 +97,7 @@ export default class Game {
         this.render();
         this.bubbleInterval = setInterval(this.generateBubbles, 2000);
         this.oxygenInterval = setInterval(this.loseOxygen, 2000);
-        this.sharkInterval = setInterval(this.generateSharks, 10000);
+        this.sharkInterval = setInterval(this.generateSharksAndFish, 6000);
         this.itemInterval = setInterval(this.generateItems, 1000)
     }
 
@@ -113,14 +109,25 @@ export default class Game {
         this.meterStatus();
     }
 
-    loseOxygen() {
-        if ((this.oxygenLevel - 10) < 0 ) {
-            this.oxygenLevel = 0
+    loseOxygen(attack) {
+        if (attack instanceof StingRay) {
+            this.oxygenLevel -= .5; 
         } else {
-            this.oxygenLevel -= 10;
-        }
 
+            if ((this.oxygenLevel - 10) < 0 ) {
+                this.oxygenLevel = 0
+            } else {
+                this.oxygenLevel -= 10;
+            }
+
+        }
         this.meterStatus();
+    }
+
+    jellyAttack() {
+        console.log("Paralyze Attack! ");
+        this.diver.toggleParalyze();
+        setTimeout(this.diver.unParalyze.bind(this.diver), 2000)
     }
 
     meterStatus() {
@@ -133,9 +140,13 @@ export default class Game {
         this.score += 1; 
     }
 
-    collectItems() {
+    collectItems(item) {
         console.log("Item Collected!")
-        this.score += 5
+        if (item instanceof SandDollar) {
+            this.score += 5
+        } else if (item instanceof Coral) {
+            this.score += 10
+        }
     }
 
     draw() {
@@ -221,6 +232,11 @@ export default class Game {
     }
 
     handleKeyDown(event) {
+        if (this.diver.paralyzed) {
+            event.preventDefault();
+            return null;
+        }
+
         if (this.usernameSubmitted) event.preventDefault();
 
         if (this.isGameOver && this.usernameSubmitted) {
@@ -229,7 +245,7 @@ export default class Game {
         }
 
         if (!this.running && (!this.isGameOver)) {
-            // debugger; 
+
             this.play();
         } else if (this.running) {
             event.preventDefault();
@@ -261,7 +277,7 @@ export default class Game {
         this.diver.render(this.ctx);
         this.oxygenMeter.render(this.ctx, this.oxygenLevel, this.meterColor);
         this.scoreBoard.render(this.ctx, this.score);
-        // this.StingRay.render(this.y + 200)
+
         this.draw();
 
 
@@ -306,7 +322,12 @@ export default class Game {
     generateBubbles() {
         let bubbleX = Math.floor(Math.random() * this.canvas.width)
         let bubble = new Bubble(this.ctx, this.canvas.width, this.canvas.height, this.addOxygen);
-        this.bubbles[bubbleX] = bubble; 
+        this.bubbles[bubbleX] = bubble;
+        
+        let jellyX = Math.floor(Math.random() * this.canvas.width)
+        let jellyfish = new JellyFish(this.ctx, this.canvas.width, this.canvas.height, this.jellyAttack);
+        this.bubbles[jellyX] = jellyfish;
+
         this.deleteOldBubbles();
 
     }
@@ -317,18 +338,34 @@ export default class Game {
        }
     }
 
-    generateSharks() {
-        let sharkY = Math.floor(Math.random() * this.canvas.height);
-        let shark = new Shark(this.ctx, this.canvas.height, this.canvas.width, this.gameOver);
+    generateSharksAndFish() {
+        const fishColors = ["blue", "yellow"]
+        let y = Math.floor(Math.random() * this.canvas.height);
 
-        this.sharks[sharkY] = shark;
-        this.deleteOldSharks();
+        let fish; 
+        if (this.fishCount % 3 === 0) {
+            fish = new Shark(this.ctx, this.canvas.height, this.canvas.width, this.gameOver);
+        } else if (this.fishCount % 3 === 1) {
+            let color = fishColors[Math.floor(Math.random() * 2)];
+            fish = new Fish(this.ctx, color, this.canvas.height, this.canvas.width, this.collectItems);
+        } else if (this.fishCount % 3 === 2) {
+            fish = new StingRay(this.ctx, this.canvas.height, this.canvas.width, this.loseOxygen, -100);
+        }
+
+        this.sharks[y] = fish;
+        this.fishCount += 1;
+        this.deleteOldSharksAndFish();
     }
 
 
-    deleteOldSharks() {
+    deleteOldSharksAndFish() {
         for (let sy in this.sharks) {
-            (this.sharks[sy].x < -100) ? delete this.sharks[sy]: null;
+            if (this.sharks[sy] instanceof StingRay) {
+                (this.sharks[sy].x > this.canvas.width + 100) ? delete this.sharks[sy]: null;
+            } else {
+                (this.sharks[sy].x < -100) ? delete this.sharks[sy]: null;
+            
+            }
         }
     }
 
@@ -349,6 +386,9 @@ export default class Game {
         this.items[itemX] = item; 
         this.itemCount += 1;
 
+        for (let x in this.items) {
+            (this.items[x].y < -100) ? delete this.items[x] : null; 
+        }
     }
 
 }
