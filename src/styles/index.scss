@@ -25,15 +25,15 @@ a:hover {
 }
 
 h1 {
-    padding-top: 24px;
     font-size:30px;
     font-weight: 400;
 
 }
 
 nav {
+    height: 40px;
     width: 900px; 
-    margin: 0 auto;
+    margin: 60px auto 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -42,14 +42,39 @@ nav {
 }
 
 
-#high-scores {}
-
 ul li, ol li {
     list-style: none;
-    margin-left: 25px;
     padding: 8px;
 }
 
+#overlay {
+    width: 100%;
+    height: 100%;
+    background-color: orangered;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    justify-content: start;
+
+
+}
+
+#x-link {
+    position: relative;
+    margin-top: 30px;
+    margin-left: 780px;
+    color: white;
+}
+
+.hidden {
+    display: none;
+
+}
+
+.show {
+    display: flex;
+
+}
 
 #wrapper {
     height: 600px; 
@@ -57,7 +82,6 @@ ul li, ol li {
     position: relative;
     margin: 0px auto;
     border: orangered solid 4px;
-    border-radius: 22px;
     overflow: hidden;
 }
 
@@ -84,9 +108,6 @@ form {
     justify-content: space-around;
 }
 
-.hidden {
-    display: none; 
-}
 
 form input, button {
     font-size: 16px;
@@ -154,10 +175,10 @@ canvas {
     color: white;
 }
 
-.bottom-container h3 {
+#overlay h3 {
     font-size: 24px;
+    padding-bottom: 40px;
     color: white; 
-    padding-bottom: 10px;
 }
 
 .bottom-container section {
@@ -167,5 +188,17 @@ canvas {
     box-sizing: border-box;
     background-color: orangered;
     border-radius: 22px;
+
+}
+
+footer {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 20px;
+        position: fixed;
+        background-color: white;
+        bottom: 0;
 
 }

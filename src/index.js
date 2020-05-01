@@ -16,11 +16,6 @@ const config = {
   firebase.initializeApp(config);
   var database = firebase.database();
 
-
-// new game 
-
-let game = new Game();
-
 // read score data
 
 let highScores; 
@@ -38,10 +33,58 @@ let highScores;
 // submit username for highscore & send data
 
 window.onload = function () {
+    let game = new Game();
+
+    let deepestDivesLink = document.getElementById("dd-link"); 
+    let howToPlayLink = document.getElementById("htp-link")
+
+    function xLinkListener() {
+        let howToPlay = document.getElementById("htp-container");
+        let overlay = document.getElementById("overlay");
+        let deepestDives = document.getElementById("dd-container");
+
+        overlay.classList.remove("show");
+        overlay.classList.add("hidden");
+        howToPlay.classList.add("hidden");
+        deepestDives.classList.add("hidden");
+    }
+
+
+    deepestDivesLink.addEventListener("click", (e) => {
+        let deepestDives = document.getElementById("dd-container");
+        let overlay = document.getElementById("overlay");
+        let xLink = document.getElementById("x-link")
+
+        
+        deepestDives.classList.toggle("hidden");
+        overlay.classList.toggle("show");
+        overlay.classList.toggle("hidden");
+
+        xLink.addEventListener("click", xLinkListener)
+
+    });
+
+    howToPlayLink.addEventListener("click", (e) => {
+        let howToPlay = document.getElementById("htp-container");
+        let overlay = document.getElementById("overlay");
+        let xLink = document.getElementById("x-link")
+
+        howToPlay.classList.toggle("hidden");
+        overlay.classList.toggle("show");
+        overlay.classList.toggle("hidden");
+     
+
+
+        xLink.addEventListener("click", xLinkListener)
+    })
+
+
+
+
+
     let submitForm = document.getElementById("submit-form");
     submitForm.addEventListener("submit", (e) => {
          e.preventDefault();
-
 
         let name = document.getElementById("name").value;
         let score = game.score;
