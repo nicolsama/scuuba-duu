@@ -16,7 +16,6 @@ h1, h2, h3, h4 {
 html,
 body {
     height: 100%;
-    width: 100%;
     margin: 0;
     padding: 0;
 }
@@ -43,14 +42,16 @@ a:hover {
 h1 {
     font-size:30px;
     font-weight: 400;
+
 }
 
 nav {
     height: 40px;
     width: 900px; 
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    padding: 15px;
+    padding: 10px;
     background-color: white;
 }
 
@@ -98,6 +99,7 @@ ul li {
 #wrapper {
     height: 600px; 
     width: 900px;
+    position: relative;
     margin: 0px auto;
     border: orangered solid 4px;
     overflow: hidden;
