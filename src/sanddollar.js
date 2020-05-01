@@ -5,7 +5,7 @@ export default class SandDollar {
         this.ctx = ctx; 
         this.canvasHeight = canvasHeight;
         this.canvasWidth = canvasWidth;
-        this.y = this.canvasHeight -30;
+        this.y = this.canvasHeight + 30;
         this.range = 20;
         this.collected = false; 
         this.collectItems = collectItems; 

@@ -124,16 +124,17 @@ export default class Game {
         this.meterStatus();
     }
 
-    jellyAttack() {
-        console.log("Paralyze Attack! ");
-        this.diver.toggleParalyze();
-        setTimeout(this.diver.unParalyze.bind(this.diver), 2000)
-    }
-
+    
     meterStatus() {
         if (this.oxygenLevel >= 66) this.meterColor = "lightblue";
         if (this.oxygenLevel < 66) this.meterColor = "orange";
         if (this.oxygenLevel < 33) this.meterColor = "red";
+    }
+    
+    jellyAttack() {
+        console.log("Paralyze Attack! ");
+        this.diver.toggleParalyze();
+        setTimeout(this.diver.unParalyze.bind(this.diver), 2000)
     }
 
     getDivePoints() {

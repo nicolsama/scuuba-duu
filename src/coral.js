@@ -4,7 +4,7 @@ export default class Coral {
         this.color = color; 
         this.canvasHeight = canvasHeight;
         this.canvasWidth = canvasWidth;
-        this.y = this.canvasHeight - 30;
+        this.y = this.canvasHeight + 30;
         this.collectItems = collectItems;
         this.collected = false;
         this.range = 20;
