@@ -74,7 +74,7 @@ window.onload = function () {
         highScoreList.innerHTML = '';
         let scores = ((highScores) ? Object.values(highScores): [])
             .sort( (b, a) => (a.value - b.value))
-            .slice(0,6);
+            .slice(0,10);
         scores.forEach( score => {
             let li = document.createElement("li"); 
             let text = document.createTextNode(`${score.name}: ${score.value}`);

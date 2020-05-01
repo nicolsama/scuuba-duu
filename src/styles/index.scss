@@ -7,20 +7,33 @@ h1, h2, h3, h4 {
 * {
     padding: 0; 
     margin: 0;
-    font-family: 'Roboto Mono',
+    font-family: 'Space Mono',
     monospace;
+    font-weight: 400;
+    text-align: center;
 }
 
 a {
+    padding: 10px 10px 0 10px;
     text-decoration: none;
     cursor: pointer;
-    color: lightseagreen;
+    color: orangered;
 }
 
 a:hover {
     color: orange;
 }
+
+h1 {
+    padding-top: 24px;
+    font-size:30px;
+    font-weight: 400;
+
+}
+
 nav {
+    width: 900px; 
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -29,19 +42,23 @@ nav {
 }
 
 
-#high-scores li{
+#high-scores {}
+
+ul li, ol li {
     list-style: none;
+    margin-left: 25px;
+    padding: 8px;
 }
 
-ul li {
-    margin-left: 25px;
-}
 
 #wrapper {
     height: 600px; 
     width: 900px;
     position: relative;
-    margin: 40px auto;
+    margin: 0px auto;
+    border: orangered solid 4px;
+    border-radius: 22px;
+    overflow: hidden;
 }
 
 #input-username {
@@ -57,9 +74,8 @@ ul li {
 }
 
 #input-username h2 {
-    font-size: 20px;
+    font-size: 30px;
     padding-bottom: 20px;
-
 }
 
 
@@ -79,6 +95,7 @@ form input, button {
     color: teal;
     border: none;
     border-radius: 30px;
+    min-width: 25px;
 }
 
 button:hover {
@@ -138,6 +155,7 @@ canvas {
 }
 
 .bottom-container h3 {
+    font-size: 24px;
     color: white; 
     padding-bottom: 10px;
 }
@@ -148,6 +166,6 @@ canvas {
     margin: 50px;
     box-sizing: border-box;
     background-color: orangered;
-    border: orangered solid 2px;
+    border-radius: 22px;
 
 }

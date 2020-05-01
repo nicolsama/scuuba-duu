@@ -7,9 +7,9 @@ export default class StartScreen {
 
     render() {
         this.ctx.fillStyle = "red";
-        this.ctx.font = '50px Roboto Mono';
+        this.ctx.font = '50px Space Mono';
         this.ctx.fillText("Scuuba Duu", this.x - 148, this.y);
-        this.ctx.font = '20px Roboto Mono';
+        this.ctx.font = '20px Space Mono';
         this.ctx.fillStyle = "white";
         this.ctx.fillText('(Press any key to start)', this.x - 142, this.y + 50);
     }
