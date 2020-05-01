@@ -7,52 +7,52 @@
     <title>Scuuba Duu</title>
 </head>
 <body>
-    <nav>
-        <h1>Scuuba Duu</h1>
-        <a id="dd-link">Deepest Dives</a>
-        <a id="htp-link">How to Play</a>
-    </nav>
-    <div id="wrapper">
-        <div id="overlay" class="ov hidden">
-            
-            <span id="x-link" >&#x2716;</span>
-            <section id="dd-container" class="hidden">
-                <h3>~ Deepest Dives ~</h3>
-                <ul id="high-scores"></ul>
-            </section>
-            <section id="htp-container" class="hidden">
-                <h3>How to Play</h3>
-                <ol>
-                    <li>Control the diver with arrow keys & get points for diving deeper (&#8595;)</li>
-                    <li style="color: orange; font-size: 25px; padding: 0;"> &#8592; &#8593; &#8594; &#8595;</li>
-                    <li>Collect coral and sand dollars for bonus points</li>
-                    <img src="./src/assets/coral-sanddollar.png" alt="items-icon">
-                    <li>Maintain O2 levels by colliding with bubbles</li>
-                    <img src="./src/assets/bubbles.png" alt="bubbles-icon">
-                    <li>Jellyfish shock and paralyze you</li>
-                    <li>Stingrays suck up O2 if close by</li>
-                    <li>Shark attack = immediate death</li>
-                    <img src="./src/assets/shark-jelly-stingray.png" alt="enemies-icon">
-                </ol>
-            </section>
+<div class="container">
+
+    <div class="top">
+        <nav>
+            <h1>Scuuba Duu</h1>
+            <a id="dd-link">Deepest Dives</a>
+            <a id="htp-link">How to Play</a>
+        </nav>
+        <div id="wrapper">
+            <div id="overlay" class="ov hidden">
+                
+                <span id="x-link" >&#x2716;</span>
+                <section id="dd-container" class="hidden">
+                    <h3>~ Deepest Dives ~</h3>
+                    <ul id="high-scores"></ul>
+                </section>
+                <section id="htp-container" class="hidden">
+                    <h3>How to Play</h3>
+                    <ol>
+                        <li>Control the diver with arrow keys & get points for diving deeper (&#8595;)</li>
+                        <li style="color: orange; font-size: 25px; padding: 0;"> &#8592; &#8593; &#8594; &#8595;</li>
+                        <li>Collect coral and sand dollars for bonus points</li>
+                        <img src="./src/assets/coral-sanddollar.png" alt="items-icon">
+                        <li>Maintain O2 levels by colliding with bubbles</li>
+                        <img src="./src/assets/bubbles.png" alt="bubbles-icon">
+                        <li>Jellyfish shock and paralyze you</li>
+                        <li>Stingrays suck up O2 if close by</li>
+                        <li>Shark attack = immediate death</li>
+                        <img src="./src/assets/shark-jelly-stingray.png" alt="enemies-icon">
+                    </ol>
+                </section>
+            </div>
+
+            <canvas id="canvas" width="900" height="600"></canvas>
+            <script type="text/javascript" src="./dist/bundle.js"></script>
+            <div id="input-username" class="hidden">
+                <h1>DED DUUDE</h1>
+                <h2>Enter A Username</h2>
+                <form id="submit-form">
+
+                    <input type="text" id="name" size=15>
+                    <input type="submit" id="submit-button" value="OK" />
+
+                </form>
+            </div>
         </div>
-
-        <canvas id="canvas" width="900" height="600"></canvas>
-        <script type="text/javascript" src="./dist/bundle.js"></script>
-        <div id="input-username" class="hidden">
-            <h1>DED DUUDE</h1>
-            <h2>Enter A Username</h2>
-            <form id="submit-form">
-
-                <input type="text" id="name" size=15>
-                <input type="submit" id="submit-button" value="OK" />
-
-            </form>
-        </div>
-    </div>
-
-
-    <div class="bottom-container">
     </div>
 
         <footer>
@@ -62,5 +62,7 @@
             <a href="https://www.linkedin.com/in/nicole-samanich-b21078136">LinkedIn</a>
             <a href="#">Angelist</a>
         </footer>
+
+    </div>
 </body>
 </html>

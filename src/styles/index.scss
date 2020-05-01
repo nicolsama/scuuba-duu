@@ -13,6 +13,22 @@ h1, h2, h3, h4 {
     text-align: center;
 }
 
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
 a {
     padding: 10px 10px 0 10px;
     text-decoration: none;
@@ -27,17 +43,14 @@ a:hover {
 h1 {
     font-size:30px;
     font-weight: 400;
-
 }
 
 nav {
     height: 40px;
     width: 900px; 
-    margin: 60px auto 0 auto;
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    padding: 20px;
+    padding: 15px;
     background-color: white;
 }
 
@@ -85,7 +98,6 @@ ul li {
 #wrapper {
     height: 600px; 
     width: 900px;
-    position: relative;
     margin: 0px auto;
     border: orangered solid 4px;
     overflow: hidden;
@@ -187,9 +199,4 @@ footer {
         display: flex;
         align-items: center;
         justify-content: space-around;
-        padding: 20px;
-        position: fixed;
-        background-color: white;
-        bottom: 0;
-
 }
