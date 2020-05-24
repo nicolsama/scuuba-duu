@@ -5,7 +5,6 @@ export default class Diver {
         this.width = 20;
         this.height = 20;
         this.paralyzed = false; 
-
         this.unParalyze = this.unParalyze.bind(this);
     }
 

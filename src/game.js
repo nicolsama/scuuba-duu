@@ -68,7 +68,6 @@ export default class Game {
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.handleKeyUp = this.handleKeyUp.bind(this); 
         this.gameOver = this.gameOver.bind(this);
-
         this.initializeEvents();
         this.restart();
     }
@@ -102,7 +101,6 @@ export default class Game {
     }
 
     addOxygen() {
-        console.log("Adding Oxygen");
         ((this.oxygenLevel + 20) > 100) ? 
             this.oxygenLevel = 100 : 
             this.oxygenLevel += 20;
@@ -113,13 +111,11 @@ export default class Game {
         if (attack instanceof StingRay) {
             this.oxygenLevel -= .5; 
         } else {
-
             if ((this.oxygenLevel - 10) < 0 ) {
                 this.oxygenLevel = 0
             } else {
                 this.oxygenLevel -= 10;
             }
-
         }
         this.meterStatus();
     }
@@ -132,7 +128,6 @@ export default class Game {
     }
     
     jellyAttack() {
-        console.log("Paralyze Attack! ");
         this.diver.toggleParalyze();
         setTimeout(this.diver.unParalyze.bind(this.diver), 2000)
     }
@@ -142,7 +137,6 @@ export default class Game {
     }
 
     collectItems(item) {
-        console.log("Item Collected!")
         if (item instanceof SandDollar) {
             this.score += 5
         } else if (item instanceof Coral) {
@@ -246,25 +240,20 @@ export default class Game {
         }
 
         if (!this.running && (!this.isGameOver)) {
-
             this.play();
         } else if (this.running) {
             event.preventDefault();
             switch (event.keyCode) {
                 case 38:
-                    console.log("Up key is pressed");
                     this.upPressed = true; 
                     break;
                 case 40:
-                    console.log("Down key is pressed");
                         this.downPressed = true; 
                     break;
                 case 39:
-                    console.log("Right key is pressed");
                         this.rightPressed = true; 
                     break;
                 case 37:
-                    console.log("Left key is pressed");
                     event.preventDefault();
                     this.leftPressed = true; 
                     break;

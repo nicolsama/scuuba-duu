@@ -55,7 +55,6 @@ export default class StingRay {
 
         if (x > minX && x < maxX && y > minY && y < maxY) {
             this.loseOxygen(this);
-            console.log("Sting Ray Attack!")
         }
 
     }

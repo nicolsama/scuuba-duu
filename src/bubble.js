@@ -2,16 +2,16 @@
 export default class Bubble {
 
     constructor(ctx, canvasWidth, canvasHeight, addO2) {
-        this.height = 20; 
-        this.width = 20; 
+        this.size = 10; 
         this.canvasWidth = canvasWidth; 
         this.canvasHeight = canvasHeight;
         this.ctx = ctx;
         // this.x = (Math.random() * this.canvasWidth); 
         this.y = this.canvasHeight - 60; 
         this.addO2 = addO2; 
-        this.range = 20;
+        this.range = 40;
         this.popped = false; 
+        this.fill = "lightblue"
 
     }
 
@@ -19,13 +19,13 @@ export default class Bubble {
     render(x) {
         if (!this.popped) {
             this.ctx.beginPath();
-            this.ctx.arc(x, this.y, 10, 0, Math.PI * 2, true); 
-            this.ctx.fillStyle = "lightblue";
+            this.ctx.arc(x, this.y, this.size, 0, Math.PI * 2, true); 
+            this.ctx.fillStyle = this.fill;
             this.ctx.fill();
             this.ctx.closePath();
             this.y -= 1; 
         } else {
-            null
+            null;
         }
 
 
@@ -38,7 +38,10 @@ export default class Bubble {
         if ( x > minX && x < maxX && y > minY && y < maxY && !this.popped) {
 
             this.addO2(); // pass in the bubble to be deleted
-            this.popped = true; 
+            this.size = 14; 
+            setTimeout(() => {
+               this.popped = true 
+            }, 150);
         }
     }
 }

@@ -38,49 +38,55 @@ window.onload = function () {
     let deepestDivesLink = document.getElementById("dd-link"); 
     let howToPlayLink = document.getElementById("htp-link")
 
-    function xLinkListener() {
-        let howToPlay = document.getElementById("htp-container");
-        let overlay = document.getElementById("overlay");
-        let deepestDives = document.getElementById("dd-container");
+    
+    let deepDivesOpen = false; 
+    let howToPlayOpen = false; 
 
+    let deepestDives = document.getElementById("dd-container");
+    let overlay = document.getElementById("overlay");
+    let xLink = document.getElementById("x-link");
+    let howToPlay = document.getElementById("htp-container");
+
+    function xLinkListener() {
         overlay.classList.remove("show");
         overlay.classList.add("hidden");
         howToPlay.classList.add("hidden");
         deepestDives.classList.add("hidden");
+        deepDivesOpen = false;
+        howToPlayOpen = false;
     }
 
-
-    deepestDivesLink.addEventListener("click", (e) => {
-        let deepestDives = document.getElementById("dd-container");
-        let overlay = document.getElementById("overlay");
-        let xLink = document.getElementById("x-link")
-
-        
-        deepestDives.classList.toggle("hidden");
+    function toggleOverlay() {
         overlay.classList.toggle("show");
         overlay.classList.toggle("hidden");
+        xLink.addEventListener("click", xLinkListener);
+    }
 
-        xLink.addEventListener("click", xLinkListener)
-
+    deepestDivesLink.addEventListener("click", (e) => {
+        if (howToPlayOpen && !deepDivesOpen) {
+            deepestDives.classList.toggle("hidden");
+            howToPlay.classList.toggle("hidden");
+            deepDivesOpen = true;
+            howToPlayOpen = false;
+        } else {
+            deepestDives.classList.toggle("hidden");
+            deepDivesOpen = !deepDivesOpen;
+            toggleOverlay();
+        }
     });
 
     howToPlayLink.addEventListener("click", (e) => {
-        let howToPlay = document.getElementById("htp-container");
-        let overlay = document.getElementById("overlay");
-        let xLink = document.getElementById("x-link")
-
-        howToPlay.classList.toggle("hidden");
-        overlay.classList.toggle("show");
-        overlay.classList.toggle("hidden");
-     
-
-
-        xLink.addEventListener("click", xLinkListener)
+        if (deepDivesOpen && !howToPlayOpen) {
+            deepestDives.classList.toggle("hidden");
+            howToPlay.classList.toggle("hidden");
+            deepDivesOpen = false; 
+            howToPlayOpen = true; 
+        } else {
+            howToPlay.classList.toggle("hidden");
+            howToPlayOpen = !howToPlayOpen;
+            toggleOverlay();
+        }
     })
-
-
-
-
 
     let submitForm = document.getElementById("submit-form");
     submitForm.addEventListener("submit", (e) => {
@@ -88,8 +94,6 @@ window.onload = function () {
 
         let name = document.getElementById("name").value;
         let score = game.score;
-
-        console.log("Sending Score Data!")
 
         writeUserData(name, score); 
         fetchHighScores(); 
